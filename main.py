@@ -41,7 +41,7 @@ def github_call(owner:str,repo:str):
       results=[]
       for pr in data:
          results.append({"number":pr["number"],"title": pr["title"]})
-         return results
+      return results
                          
 @app.get("/repo/{owner}/{repo}/pulls/{pull_number}/files")
 def gith(owner:str,repo:str,pull_number:int):
