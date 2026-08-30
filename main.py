@@ -79,3 +79,41 @@ def call_gemini():
    data=response.json()
    ai_text=data["candidates"][0]["content"]["parts"][0]["text"]
    return {"reply": ai_text}
+
+
+@app.get("/review/{owner}/{repo}/pulls/{pull_number/files}")
+def review_pr(owner: str, repo: str, pull_number: int):
+   headers = {"Authorization": f"Bearer {my_token}"}
+   response = httpx.get(
+       f"https://api.github.com/repos/{owner}/{repo}/pulls/{pull_number}/files",
+       headers=headers,
+       follow_redirects=True
+   )
+   data = response.json()
+
+   for file in data:
+      filename = file["filename"]
+      patch = file["patch"]
+
+      prompt_text = f"""You are a senior code reviewer. Review the following code change and point out any bugs, security issues, or code quality problems. Be concise.
+
+Filename: {filename}
+
+Diff:
+{patch}"""
+
+      url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key={gemini_key}"
+      body = {
+         "contents": [
+            {
+               "parts": [
+                   {"text": prompt_text}
+               ]
+            }
+         ]
+      }
+      ai_response = httpx.post(url, json=body, timeout=30)
+      ai_data = ai_response.json()
+      ai_text = ai_data["candidates"][0]["content"]["parts"][0]["text"]
+
+      return {"filename": filename, "review": ai_text}
