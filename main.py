@@ -44,8 +44,17 @@ def github_call(owner:str,repo:str):
       return results
                          
 @app.get("/repo/{owner}/{repo}/pulls/{pull_number}/files")
-def gith(owner:str,repo:str,pull_number:int):
+def git_pr_files(owner:str,repo:str,pull_number:int):
    headers={"Authorization": f"Bearer {my_token}"}
    response=httpx.get(f"https://api.github.com/repos/{owner}/{repo}/pulls/{pull_number}/files", headers=headers,follow_redirects=True)
    data=response.json()
-   return data
+   results=[]
+   for file in data:
+      results.append({
+         "filename": file["filename"],
+         "status": file["status"],
+         "additions": file["additions"],
+         "deletions": file["deletions"],
+         "patch": file["patch"]
+      })
+   return results
