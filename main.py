@@ -2,6 +2,13 @@ from fastapi import FastAPI
 import httpx
 
 app=FastAPI()
+import os
+from dotenv import load_dotenv
+load_dotenv()
+my_token=os.getenv("GITHUB_TOKEN")
+
+gemini_key=os.getenv("GEMINI_API_KEY")
+
 @app.get("/hello") #route 
 def say_hello():
     return {"message": "Hello , world"}
@@ -20,11 +27,6 @@ def get_github_user(username:str):
 
    return {"name": data["name"], "public_repos": data["public_repos"]}
 
-
-import os
-from dotenv import load_dotenv
-load_dotenv()
-my_token=os.getenv("GITHUB_TOKEN")
 
 @app.get("/me")
 def get_my_profile():
@@ -58,3 +60,22 @@ def git_pr_files(owner:str,repo:str,pull_number:int):
          "patch": file["patch"]
       })
    return results
+
+@app.get("/ask-ai")
+def call_gemini():
+   url=f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key={gemini_key}"
+   body={
+      "contents":[
+         {
+            "parts": [
+                 {"text":  "Say hello in one sentence."}
+
+            ]
+         }
+      ]
+   
+   }
+   response=httpx.post(url,json=body, timeout=30)
+   data=response.json()
+   ai_text=data["candidates"][0]["content"]["parts"][0]["text"]
+   return {"reply": ai_text}
