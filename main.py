@@ -81,7 +81,9 @@ def call_gemini():
    return {"reply": ai_text}
 
 
-@app.get("/review/{owner}/{repo}/pulls/{pull_number/files}")
+
+
+@app.get("/review/{owner}/{repo}/pulls/{pull_number}")
 def review_pr(owner: str, repo: str, pull_number: int):
    headers = {"Authorization": f"Bearer {my_token}"}
    response = httpx.get(
@@ -90,7 +92,7 @@ def review_pr(owner: str, repo: str, pull_number: int):
        follow_redirects=True
    )
    data = response.json()
-
+   all_reviews=[]
    for file in data:
       filename = file["filename"]
       patch = file["patch"]
@@ -116,4 +118,6 @@ Diff:
       ai_data = ai_response.json()
       ai_text = ai_data["candidates"][0]["content"]["parts"][0]["text"]
 
-      return {"filename": filename, "review": ai_text}
+      # return {"filename": filename, "review": ai_text}
+      all_reviews.append({"filename": filename,"review": ai_text})
+   return all_reviews
