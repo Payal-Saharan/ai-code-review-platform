@@ -12,7 +12,7 @@ This project is in early development. Right now, it is a FastAPI backend that co
 - Fetch changed files and code diffs for a specific pull request
 - Generate an AI-powered code review for a pull request's  change file, using Google Gemini - detects potential bugs, security issues, and code quality problem, with explanations and suggested fixes
 
-**Note:** the AI review currently analyzes one changed file per pull request (the first one). Looping through and reviewing every changed file in a PR is planned next.
+**Note:** The AI review analyzes every changed file in a pull request and returns a separate review for each.
 
 
 ## Tech Stack
@@ -43,7 +43,6 @@ uvicorn main:app --reload
 
 ## Planned Features
 
-- Review all changed files in a pull request, not just the first one
 - Post AI-generated review comments directly on GitHub pull requests
 - Automated bug and security issue detection across a whole repository
 - Test generation for changed code
