@@ -116,8 +116,11 @@ Diff:
       }
       ai_response = httpx.post(url, json=body, timeout=30)
       ai_data = ai_response.json()
+      if "candidates" not in ai_data:
+        return {"filename": filename, "review": "AI review unavailable right now (rate limit or API error). Please try again later."}
       ai_text = ai_data["candidates"][0]["content"]["parts"][0]["text"]
 
       # return {"filename": filename, "review": ai_text}
       all_reviews.append({"filename": filename,"review": ai_text})
    return all_reviews
+
