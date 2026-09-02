@@ -124,3 +124,18 @@ Diff:
       all_reviews.append({"filename": filename,"review": ai_text})
    return all_reviews
 
+@app.get("/post-comment/{owner}/{repo}/{pull_number}")
+def post_comment(owner: str, repo: str, pull_number: int):
+    headers = {"Authorization": f"Bearer {my_token}"}
+    url = f"https://api.github.com/repos/{owner}/{repo}/issues/{pull_number}/comments"
+    body = {"body": "This is a test comment from my AI review bot."}
+    response = httpx.post(url, headers=headers, json=body)
+    return {"status_code": response.status_code, "raw_text": response.text}
+
+
+@app.get("/check-token")
+def check_token():
+    if my_token:
+        return {"token_preview": my_token[:40] + "..."}
+    else:
+        return {"status": "Token not loaded"}
