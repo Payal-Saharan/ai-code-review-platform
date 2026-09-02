@@ -10,9 +10,8 @@ This project is in early development. Right now, it is a FastAPI backend that co
 - Fetch authenticated GitHub user profile info (using a Personal Access Token)
 - List open pull requests for any public repository
 - Fetch changed files and code diffs for a specific pull request
-- Generate an AI-powered code review for a pull request's  change file, using Google Gemini - detects potential bugs, security issues, and code quality problem, with explanations and suggested fixes
-
-**Note:** The AI review analyzes every changed file in a pull request and returns a separate review for each.
+- Generate an AI-powered code review for every changed file in a pull request, using Google Gemini — detects potential bugs, security issues, and code quality problems, with explanations and suggested fixes
+- Automatically post each AI-generated review as a real comment directly on the GitHub pull request
 
 
 ## Tech Stack
@@ -43,7 +42,6 @@ uvicorn main:app --reload
 
 ## Planned Features
 
-- Post AI-generated review comments directly on GitHub pull requests
 - Automated bug and security issue detection across a whole repository
 - Test generation for changed code
 - Sandboxed test execution
