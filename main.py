@@ -117,12 +117,28 @@ Diff:
       ai_response = httpx.post(url, json=body, timeout=30)
       ai_data = ai_response.json()
       if "candidates" not in ai_data:
-        return {"filename": filename, "review": "AI review unavailable right now (rate limit or API error). Please try again later."}
-      ai_text = ai_data["candidates"][0]["content"]["parts"][0]["text"]
-
-      # return {"filename": filename, "review": ai_text}
-      all_reviews.append({"filename": filename,"review": ai_text})
+        ai_text= "AI review unavailable right now (rate limit or API error). Please try again later."
+      else:
+        ai_text = ai_data["candidates"][0]["content"]["parts"][0]["text"]
+   
+      comment_body_text = f"**Review for `{filename}`:**\n\n{ai_text}"
+      comment_headers={"Authorization": f"Bearer {my_token}"}
+      comment_url=f"https://api.github.com/repos/{owner}/{repo}/issues/{pull_number}/comments"
+      comment_body={"body": comment_body_text }
+      comment_response = httpx.post(comment_url,headers=comment_headers, json=comment_body)
+      all_reviews.append({
+         "filename": filename,
+         "review": ai_text,
+         "comment_status": comment_response.status_code
+   
+      })
    return all_reviews
+      
+      # return {"filename": filename, "review": ai_text}
+   # all_reviews.append({"filename": filename,"review": ai_text})
+   # return all_reviewscomment_
+
+
 
 @app.get("/post-comment/{owner}/{repo}/{pull_number}")
 def post_comment(owner: str, repo: str, pull_number: int):
