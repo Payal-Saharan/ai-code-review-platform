@@ -10,9 +10,9 @@ This project is in early development. Right now, it is a FastAPI backend that co
 - Fetch authenticated GitHub user profile info (using a Personal Access Token)
 - List open pull requests for any public repository
 - Fetch changed files and code diffs for a specific pull request
-- Generate an AI-powered code review for every changed file in a pull request, using Google Gemini — detects potential bugs, security issues, and code quality problems, with explanations and suggested fixes
+- Generate an AI-powered code review for every changed file in a pull request,   using Google Gemini — detects potential bugs, security issues, and code quality problems, with explanations and suggested fixes
 - Automatically post each AI-generated review as a real comment directly on the GitHub pull request
-
+- Save every generated review permanently in a MSQL database, creating a searchablle history of past review 
 
 ## Tech Stack
 
@@ -20,6 +20,7 @@ This project is in early development. Right now, it is a FastAPI backend that co
 - **HTTP Client:** httpx
 - **Environment Management:** python-dotenv
 - **External API:** GitHub REST API, Google Gemini API
+- **Database:** MySQL
 
 ## How to Run Locally
 
