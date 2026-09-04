@@ -205,6 +205,21 @@ def check_token():
     else:
         return {"status": "Token not loaded"}
 
-
-
-  
+@app.get("/history")
+def find_history():
+   cursor=db.cursor()
+   cursor.execute("SELECT * FROM reviews")
+   results=cursor.fetchall()  
+   history=[]
+   for row in results:
+      history.append({
+         "id": row[0],
+         "repo_owner": row[1],
+         "repo_nmae": row[2],
+         "pull_number": row[3],
+         "filename": row[4],
+         "review_text": row[5],
+         "created_at": row[6]
+      })
+   return history
+    
