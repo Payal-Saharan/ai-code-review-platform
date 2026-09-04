@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 import httpx
+# use mysql.connector library 
+import mysql.connector  
 
 app=FastAPI()
 import os
@@ -8,6 +10,47 @@ load_dotenv()
 my_token=os.getenv("GITHUB_TOKEN")
 
 gemini_key=os.getenv("GEMINI_API_KEY")
+
+mysql_password=os.getenv("MYSQL_PASSWORD")
+
+
+
+ #   here sql start 
+# check sql is connected or not 
+@app.get("/test-db")
+def test_db():
+   if db.is_connected():
+      return {"status": "Connected to Mysql"}
+   else:
+      return {"status": "not conected"}
+
+   
+   
+# function 
+# db =store this open connection in var
+db=mysql.connector.connect(
+   host="localhost",
+   user="root",
+   password=mysql_password,
+   database="ai_code_review"
+)
+# @app.get("/test-insert")
+# def test_insert():
+#  cursor=db.cursor()
+#  sql="INSERT INTO reviews (repo_owner, repo_name, pull_number, filename, review_text) VALUES (&s ,%s, %s ,%s,%s)"
+#  values=("test_owner","text_repo",1,"test.py","this is a test review")
+#  cursor.execute(sql,values)
+#  db.commit()
+#  return {"status": "Inserted successfull"} 
+@app.get("/test-insert")
+def test_insert():
+    cursor = db.cursor()
+    sql = "INSERT INTO reviews (repo_owner, repo_name, pull_number, filename, review_text) VALUES (%s, %s, %s, %s, %s)"
+    values = ("test-owner", "test-repo", 1, "test.py", "This is a test review")
+    cursor.execute(sql, values)
+    db.commit()
+    return {"status": "Inserted successfully"}
+
 
 @app.get("/hello") #route 
 def say_hello():
@@ -79,7 +122,7 @@ def call_gemini():
    data=response.json()
    ai_text=data["candidates"][0]["content"]["parts"][0]["text"]
    return {"reply": ai_text}
-
+   
 
 
 
@@ -120,7 +163,13 @@ Diff:
         ai_text= "AI review unavailable right now (rate limit or API error). Please try again later."
       else:
         ai_text = ai_data["candidates"][0]["content"]["parts"][0]["text"]
-   
+      #  every file review store in my sql
+      cursor=db.cursor()
+      sql= "INSERT INTO reviews (repo_owner,repo_name,pull_number,filename,review_text) VALUES (%s, %s, %s, %s, %s)"
+      values=(owner,repo,pull_number,filename,ai_text)
+      cursor.execute(sql,values)
+      db.commit()
+
       comment_body_text = f"**Review for `{filename}`:**\n\n{ai_text}"
       comment_headers={"Authorization": f"Bearer {my_token}"}
       comment_url=f"https://api.github.com/repos/{owner}/{repo}/issues/{pull_number}/comments"
@@ -148,10 +197,14 @@ def post_comment(owner: str, repo: str, pull_number: int):
     response = httpx.post(url, headers=headers, json=body)
     return {"status_code": response.status_code, "raw_text": response.text}
 
-
+# check token is loaded or not
 @app.get("/check-token")
 def check_token():
     if my_token:
         return {"token_preview": my_token[:40] + "..."}
     else:
         return {"status": "Token not loaded"}
+
+
+
+  
