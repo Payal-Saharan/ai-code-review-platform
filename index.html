@@ -27,7 +27,8 @@
             fetch(url)
                .then(Response=> Response.json())
                .then(data=> {
-                console.log(data);
+                // console.log(data);
+                document.getElementById("result").innerText=JSON.stringify(data,null,2);
                });
            
         }
