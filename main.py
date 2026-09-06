@@ -4,6 +4,13 @@ import httpx
 import mysql.connector  
 
 app=FastAPI()
+from fastapi.middleware.cors import CORSMiddleware
+app.add_middleware(
+   CORSMiddleware,
+   allow_origins=["*"],
+   allow_methods=["*"],
+   allow_headers=["*"],
+)
 import os
 from dotenv import load_dotenv
 load_dotenv()

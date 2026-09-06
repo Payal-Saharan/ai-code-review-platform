@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Code Review Platform</title>
+</head>
+<body>
+    <h1>AI Code Review Platform</h1>
+   
+    <input type="text" id="owner" placeholder="Repo owner">
+    <input type="text" id="repo" placeholder="Repo name">
+    <input type="text" id="pull_number" placeholder="PR number">
+    <button onclick="getReview()">Get AI  Review</button>
+
+    <div id="result"></div>
+    <script>
+        function getReview(){
+            const owner=document.getElementById("owner").value;
+            const repo=document.getElementById("repo").value;
+            const pull_number=document.getElementById("pull_number").value;
+              // console.log(owner);
+            // console.log(repo);
+            // console.log(pull_number);
+            const url=`http://127.0.0.1:8000/review/${owner}/${repo}/pulls/${pull_number}`;
+            console.log(url);
+            fetch(url)
+               .then(Response=> Response.json())
+               .then(data=> {
+                console.log(data);
+               });
+           
+        }
+    </script>
+</body>
+</html>
