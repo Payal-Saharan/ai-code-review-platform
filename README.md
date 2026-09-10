@@ -7,13 +7,13 @@ An AI-powered platform that connects to GitHub repositories, analyzes pull reque
 This project is in early development. Right now, it is a FastAPI backend that connects to the GitHub API and Google's Gemini AI model. The following features currently work:
 
 - Fetch public GitHub user profile info
-- Fetch authenticated GitHub user profile info (using a Personal Access Token)
+- Fetch authenticated GitHub user profile info (using a Personal Access  Token)
 - List open pull requests for any public repository
 - Fetch changed files and code diffs for a specific pull request
 - Generate an AI-powered code review for every changed file in a pull request,   using Google Gemini — detects potential bugs, security issues, and code quality problems, with explanations and suggested fixes
 - Automatically post each AI-generated review as a real comment directly on the GitHub pull request
 - Save every generated review permanently in a MSQL database, creating a searchablle history of past review 
-
+ - Automatically triggers the full review pipeline (fetch diff → AI review → post comment → save to database) the moment a pull request is opened on GitHub, via a webhook — no manual action required
 ## Tech Stack
 
 - **Backend:** Python, FastAPI
@@ -38,6 +38,8 @@ GEMINI_API_KEY=your_gemini_api_key
 5. Run the server
 uvicorn main:app --reload
 
+
+
 6. Visit `http://127.0.0.1:8000/hello` to confirm it's running or try 
 `http://127.0.0.1:8000/review/{owner}/{repo}/pulls/{pull_number}` on a real public repository to see an AI-generated code review
 
@@ -47,3 +49,8 @@ uvicorn main:app --reload
 - Test generation for changed code
 - Sandboxed test execution
 - Automated patch suggestions
+
+ 7. Webhook Setup (for autmatic triggering)
+ This project uses Github webhooks to automatically  trigger reviews when a PR is opened. For local testing , this requires exposing your server with a tool like [ngrok](http://ngrok.com/)
+  ngrok http 8000
+   Then configuration a webhook on your Github repository (Setting->Webhooks) pointing to `https://your-ngrok-url/webhook` ,with content type `application/json` , subscribed to "Pull requests" events.

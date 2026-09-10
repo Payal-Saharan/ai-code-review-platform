@@ -240,5 +240,9 @@ def find_history():
 
 @app.post("/webhook")
 def github_webhook(payload: dict):
-    print(payload)
+    pull_number = payload["number"]
+    repo_name = payload["repository"]["name"]
+    repo_owner = payload["repository"]["owner"]["login"]
+    if payload["action"] == "opened":
+        review_pr(repo_owner, repo_name, pull_number)
     return {"status": "received"}
