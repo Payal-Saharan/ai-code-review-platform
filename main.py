@@ -230,3 +230,15 @@ def find_history():
       })
    return history
     
+
+   #  webhook  --automatically notifying your program 
+   # post route that receiver not sender 
+   # payload tell fastapi --expext a json object to be sent in the req body and give it to me as a python dict 
+# @app.post("/webhook")
+# def practice_webhook(payload: dict):
+#    return {"you_sent": payload}
+
+@app.post("/webhook")
+def github_webhook(payload: dict):
+    print(payload)
+    return {"status": "received"}
