@@ -142,6 +142,7 @@ def review_pr(owner: str, repo: str, pull_number: int):
        follow_redirects=True
    )
    data = response.json()
+   print(data)
    all_reviews=[]
    for file in data:
       filename = file["filename"]

@@ -5,16 +5,15 @@ function App() {
   const [repo, setRepo] = useState("")
   const [pullNumber, setPullNumber] = useState("")
   const [reviews, setReviews] = useState([])
+  const [loading, setLoading] = useState(false) 
 
-  async function getReview() {
-    const response = await fetch(
-      `http://127.0.0.1:8000/review/${owner}/${repo}/pulls/${pullNumber}`
-    )
-
-    const data = await response.json()
-
-    setReviews(data)
-  }
+async function getReview() {
+  setLoading(true)
+  const response = await fetch(`http://127.0.0.1:8000/review/${owner}/${repo}/pulls/${pullNumber}`)
+  const data = await response.json()
+  setReviews(data)
+  setLoading(false)
+}
 
   return (
     <div>
@@ -39,6 +38,7 @@ function App() {
       />
 
       <button onClick={getReview}>Get AI Review</button>
+      {loading && <p>Loading review, please wait...</p>}
 
       {reviews.map((review, index) => (
         <div key={index}>
