@@ -1,92 +1,262 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  border-bottom: 1px solid #d0d7de;
+  padding: 16px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10;
+}
+
+.navbar .brand {
+  font-weight: 700;
+  font-size: 18px;
+  color: #1f2328;
+  text-decoration: none;
+}
+
+.navbar .nav-links {
+  display: flex;
+  gap: 28px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #656d76;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 6px 2px;
+  border-bottom: 2px solid transparent;
+}
+
+.navbar a:hover {
+  color: #1f2328;
+}
+
+.navbar a.active {
+  color: #6e40c9;
+  border-bottom: 2px solid #6e40c9;
+}
+
 .app-container {
-  max-width: 700px;
-  margin: 60px auto;
-  padding: 0 20px;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 50px 20px 80px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
 }
 
 .app-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 36px;
+}
+
+.app-header .badge {
+  display: inline-block;
+  background-color: #f3eefc;
+  color: #6e40c9;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+  letter-spacing: 0.3px;
 }
 
 .app-header h1 {
-  font-size: 32px;
+  font-size: 34px;
   color: #1f2328;
-  margin-bottom: 8px;
+  margin: 0 0 10px;
 }
 
 .app-header p {
   color: #656d76;
-  font-size: 15px;
+  font-size: 16px;
+  margin: 0;
 }
 
 .form-card {
   background-color: white;
   border: 1px solid #d0d7de;
-  border-radius: 8px;
-  padding: 20px;
+  border-radius: 12px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  gap: 14px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.input-group label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #656d76;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
 }
 
 .form-card input {
-  padding: 10px 12px;
+  padding: 11px 14px;
   font-size: 15px;
   border: 1px solid #d0d7de;
-  border-radius: 6px;
+  border-radius: 8px;
   outline: none;
 }
 
 .form-card input:focus {
-  border-color: #0969da;
+  border-color: #6e40c9;
+  box-shadow: 0 0 0 3px rgba(110, 64, 201, 0.12);
 }
 
 .form-card button {
-  padding: 10px 16px;
+  padding: 12px 16px;
   font-size: 15px;
-  font-weight: 600;
-  background-color: #1f2328;
+  font-weight: 700;
+  background-color: #6e40c9;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
+  margin-top: 6px;
 }
 
 .form-card button:hover {
-  background-color: #333;
+  background-color: #5a32a8;
 }
 
-.loading-text {
+.form-card button:disabled {
+  background-color: #b8a6dd;
+  cursor: not-allowed;
+}
+
+.loading-box {
   text-align: center;
   color: #656d76;
-  margin-top: 20px;
-  font-style: italic;
+  margin-top: 24px;
+  font-size: 14px;
+}
+
+.spinner {
+  width: 22px;
+  height: 22px;
+  border: 3px solid #e0e0e0;
+  border-top-color: #6e40c9;
+  border-radius: 50%;
+  margin: 0 auto 10px;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.results-section {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .review-card {
   background-color: white;
   border: 1px solid #d0d7de;
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 20px;
-  margin-top: 16px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
+.review-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .review-card h3 {
-  margin-top: 0;
-  margin-bottom: 10px;
-  font-size: 16px;
-  color: #0969da;
-  font-family: monospace;
+  margin: 0;
+  font-size: 14px;
+  color: #6e40c9;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  background-color: #f3eefc;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.status-badge {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.status-posted {
+  background-color: #dafbe1;
+  color: #1a7f37;
+}
+
+.status-failed {
+  background-color: #ffebe9;
+  color: #cf222e;
 }
 
 .review-card p {
   white-space: pre-wrap;
-  line-height: 1.6;
+  line-height: 1.65;
   color: #1f2328;
   font-size: 14px;
   margin: 0;
+}
+
+.meta-line {
+  font-size: 12px;
+  color: #8a949e;
+  margin-bottom: 8px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #8a949e;
+}
+
+.empty-state .icon {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.stats-row {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 30px;
+}
+
+.stat-box {
+  flex: 1;
+  background-color: white;
+  border: 1px solid #d0d7de;
+  border-radius: 10px;
+  padding: 18px;
+  text-align: center;
+}
+
+.stat-box .stat-number {
+  font-size: 26px;
+  font-weight: 700;
+  color: #6e40c9;
+}
+
+.stat-box .stat-label {
+  font-size: 12px;
+  color: #656d76;
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
 }

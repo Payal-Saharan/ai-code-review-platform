@@ -36,7 +36,7 @@ def test_db():
 # function 
 # db =store this open connection in var
 db=mysql.connector.connect(
-   host="localhost",
+   host=os.getenv("MYSQL_HOST", "localhost"),
    user="root",
    password=mysql_password,
    database="ai_code_review"
