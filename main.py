@@ -37,9 +37,10 @@ def test_db():
 # db =store this open connection in var
 db=mysql.connector.connect(
    host=os.getenv("MYSQL_HOST", "localhost"),
-   user="root",
-   password=mysql_password,
-   database="ai_code_review"
+   port=int(os.getenv("MYSQL_PORT", "3306")),
+   user=os.getenv("MYSQL_USER", "root"),
+   password=os.getenv("MYSQL_PASSWORD", mysql_password),
+   database=os.getenv("MYSQL_DATABASE", "ai_code_review")
 )
 # @app.get("/test-insert")
 # def test_insert():
