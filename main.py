@@ -239,12 +239,13 @@ def find_history():
 # @app.post("/webhook")
 # def practice_webhook(payload: dict):
 #    return {"you_sent": payload}
+from fastapi import BackgroundTasks
 
 @app.post("/webhook")
-def github_webhook(payload: dict):
+def github_webhook(payload: dict, background_tasks: BackgroundTasks):
     pull_number = payload["number"]
     repo_name = payload["repository"]["name"]
     repo_owner = payload["repository"]["owner"]["login"]
     if payload["action"] == "opened":
-        review_pr(repo_owner, repo_name, pull_number)
+        background_tasks.add_task(review_pr, repo_owner, repo_name, pull_number)
     return {"status": "received"}
