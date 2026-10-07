@@ -10,7 +10,7 @@ function ReviewPage() {
   async function getReview() {
     setLoading(true)
     setReviews([])
-    const response = await fetch(`http://127.0.0.1:8000/review/${owner}/${repo}/pulls/${pullNumber}`)
+   const response = await fetch(`https://ai-code-review-platform-production-959f.up.railway.app/review/${owner}/${repo}/pulls/${pullNumber}`)
     const data = await response.json()
     setReviews(data)
     setLoading(false)

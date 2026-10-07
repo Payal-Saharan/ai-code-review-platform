@@ -6,7 +6,7 @@ function HistoryPage() {
 
   useEffect(() => {
     async function fetchHistory() {
-      const response = await fetch("http://127.0.0.1:8000/history")
+      const response = await fetch("https://ai-code-review-platform-production-959f.up.railway.app/history")
       const data = await response.json()
       setHistory(data)
       setLoading(false)

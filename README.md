@@ -1,56 +1,56 @@
-# AI Code Review Platform
+\# AI Code Review Platform
 
 An AI-powered platform that connects to GitHub repositories, analyzes pull requests, and helps developers review code more effectively. This project is being built step by step as a learning-and-building exercise in backend engineering and AI integration.
 
-## Current Status
+\## Current Status
 
 This project is in early development. Right now, it is a FastAPI backend that connects to the GitHub API and Google's Gemini AI model. The following features currently work:
 
-- Fetch public GitHub user profile info
-- Fetch authenticated GitHub user profile info (using a Personal Access  Token)
-- List open pull requests for any public repository
-- Fetch changed files and code diffs for a specific pull request
-- Generate an AI-powered code review for every changed file in a pull request,   using Google Gemini — detects potential bugs, security issues, and code quality problems, with explanations and suggested fixes
-- Automatically post each AI-generated review as a real comment directly on the GitHub pull request
-- Save every generated review permanently in a MSQL database, creating a searchablle history of past review 
- - Automatically triggers the full review pipeline (fetch diff → AI review → post comment → save to database) the moment a pull request is opened on GitHub, via a webhook — no manual action required
-## Tech Stack
+\- Fetch public GitHub user profile info
+\- Fetch authenticated GitHub user profile info (using a Personal Access  Token)
+\- List open pull requests for any public repository
+\- Fetch changed files and code diffs for a specific pull request
+\- Generate an AI-powered code review for every changed file in a pull request,   using Google Gemini — detects potential bugs, security issues, and code quality problems, with explanations and suggested fixes
+\- Automatically post each AI-generated review as a real comment directly on the GitHub pull request
+\- Save every generated review permanently in a MSQL database, creating a searchablle history of past review&#x20;
+ - Automatically triggers the full review pipeline (fetch diff → AI review → post comment → save to database) the moment a pull request is opened on GitHub, via a webhook — no manual action required
+\## Tech Stack
 
-- **Backend:** Python, FastAPI
-- **HTTP Client:** httpx
-- **Environment Management:** python-dotenv
-- **External API:** GitHub REST API, Google Gemini API
-- **Database:** MySQL
+\- **\*\*Backend:\*\*** Python, FastAPI
+\- **\*\*HTTP Client:\*\*** httpx
+\- **\*\*Environment Management:\*\*** python-dotenv
+\- **\*\*External API:\*\*** GitHub REST API, Google Gemini API
+\- **\*\*Database:\*\*** MySQL
 
-## How to Run Locally
+\## How to Run Locally
 
-1. Clone this repository
-git clone https://github.com/Payal-Saharan/ai-code-review-platform.git
+1\. Clone this repository
+git clone [https://github.com/Payal-Saharan/ai-code-review-platform.git](https://github.com/Payal-Saharan/ai-code-review-platform.git)
 
-2. Create a virtual environment and activate it
-3. Install dependencies
+2\. Create a virtual environment and activate it
+3\. Install dependencies
 pip install fastapi uvicorn httpx python-dotenv
 
-4. Create a `.env` file in the project root with your GitHub token:
+4\. Create a \`.env\` file in the project root with your GitHub token:
 GITHUB_TOKEN=your_github_personal_access_token
 GEMINI_API_KEY=your_gemini_api_key
 
-5. Run the server
+5\. Run the server
 uvicorn main:app --reload
 
 
 
-6. Visit `http://127.0.0.1:8000/hello` to confirm it's running or try 
-`http://127.0.0.1:8000/review/{owner}/{repo}/pulls/{pull_number}` on a real public repository to see an AI-generated code review
+6\. Visit \`[https://ai-code-review-platform-production-959f.up.railway.app/hello](https://ai-code-review-platform-production-959f.up.railway.app/hello)\` to confirm it's running or try&#x20;
+\`[https://ai-code-review-platform-production-959f.up.railway.app/review/{owner}/{repo}/pulls/{pull_number](https://ai-code-review-platform-production-959f.up.railway.app/review/{owner}/{repo}/pulls/{pull_number)}\` on a real public repository to see an AI-generated code review
 
-## Planned Features
+\## Planned Features
 
-- Automated bug and security issue detection across a whole repository
-- Test generation for changed code
-- Sandboxed test execution
-- Automated patch suggestions
+\- Automated bug and security issue detection across a whole repository
+\- Test generation for changed code
+\- Sandboxed test execution
+\- Automated patch suggestions
 
- 7. Webhook Setup (for autmatic triggering)
- This project uses Github webhooks to automatically  trigger reviews when a PR is opened. For local testing , this requires exposing your server with a tool like [ngrok](http://ngrok.com/)
-  ngrok http 8000
-   Then configuration a webhook on your Github repository (Setting->Webhooks) pointing to `https://your-ngrok-url/webhook` ,with content type `application/json` , subscribed to "Pull requests" events.
+ 7. Webhook Setup (for autmatic triggering)
+ This project uses Github webhooks to automatically  trigger reviews when a PR is opened. For local testing , this requires exposing your server with a tool like [ngrok]\([http://ngrok.com/](http://ngrok.com/))
+  ngrok http 8000
+   Then configuration a webhook on your Github repository (Setting->Webhooks) pointing to \`https\://your-ngrok-url/webhook\` ,with content type \`application/json\` , subscribed to "Pull requests" events. 
