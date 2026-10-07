@@ -1,4 +1,8 @@
 \# AI Code Review Platform
+## 🔴 Live Demo
+
+- **Frontend:** https://feisty-encouragement-production-41c7.up.railway.app/
+- **Backend API:** https://ai-code-review-platform-production-959f.up.railway.app/
 
 An AI-powered platform that connects to GitHub repositories, analyzes pull requests, and helps developers review code more effectively. This project is being built step by step as a learning-and-building exercise in backend engineering and AI integration.
 
